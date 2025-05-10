@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Gerbera Flower</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="not-loaded">
+    <div class="night"></div>
+    <div class="flowers">
+        <!-- Red Gerbera Flower -->
+        <div class="flower flower--1">
+            <div class="flower__leafs flower__leafs--1">
+                <!-- Petals will be added via JavaScript -->
+                <div class="flower__white-circle"></div>
+                <div class="flower__light flower__light--1"></div>
+                <div class="flower__light flower__light--2"></div>
+                <div class="flower__light flower__light--3"></div>
+                <div class="flower__light flower__light--4"></div>
+                <div class="flower__light flower__light--5"></div>
+                <div class="flower__light flower__light--6"></div>
+                <div class="flower__light flower__light--7"></div>
+                <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line"></div>
+        </div>
+
+        <!-- Pink Gerbera Flower -->
+        <div class="flower flower--2">
+            <div class="flower__leafs flower__leafs--2">
+                <!-- Petals will be added via JavaScript -->
+                <div class="flower__white-circle"></div>
+                <div class="flower__light flower__light--1"></div>
+                <div class="flower__light flower__light--2"></div>
+                <div class="flower__light flower__light--3"></div>
+                <div class="flower__light flower__light--4"></div>
+                <div class="flower__light flower__light--5"></div>
+                <div class="flower__light flower__light--6"></div>
+                <div class="flower__light flower__light--7"></div>
+                <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line"></div>
+        </div>
+
+        <!-- Yellow Gerbera Flower -->
+        <div class="flower flower--3">
+            <div class="flower__leafs flower__leafs--3">
+                <!-- Petals will be added via JavaScript -->
+                <div class="flower__white-circle"></div>
+                <div class="flower__light flower__light--1"></div>
+                <div class="flower__light flower__light--2"></div>
+                <div class="flower__light flower__light--3"></div>
+                <div class="flower__light flower__light--4"></div>
+                <div class="flower__light flower__light--5"></div>
+                <div class="flower__light flower__light--6"></div>
+                <div class="flower__light flower__light--7"></div>
+                <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line"></div>
+        </div>
+
+        <!-- Grass elements -->
+        <div class="flower__grass flower__grass--1">
+            <div class="flower__grass--top"></div>
+            <div class="flower__grass--bottom"></div>
+        </div>
+
+        <div class="flower__grass flower__grass--2">
+            <div class="flower__grass--top"></div>
+            <div class="flower__grass--bottom"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to create petals
+        function createPetals(flowerClass, petalCount) {
+            const flower = document.querySelector(`.${flowerClass}`);
+            const leafsContainer = flower.querySelector('.flower__leafs');
+            
+            // Clear any existing petals
+            const existingPetals = leafsContainer.querySelectorAll('.flower__leaf');
+            existingPetals.forEach(petal => petal.remove());
+            
+            // Create new petals
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'flower__leaf';
+                petal.style.setProperty('--i', i);
+                leafsContainer.insertBefore(petal, leafsContainer.firstChild);
+            }
+        }
+
+        // Remove the not-loaded class to start animations when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.remove('not-loaded');
+            
+            // Create petals for each flower
+            createPetals('flower--1', 48);
+            createPetals('flower--2', 48);
+            createPetals('flower--3', 48);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+
+*,
+*::after,
+*::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark-color: #330928;
+}
+
+body {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--dark-color);
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.night {
+    position: fixed;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    filter: blur(0.1vmin);
+    background-image:
+        radial-gradient(ellipse at top, transparent 0%, var(--dark-color)),
+        radial-gradient(ellipse at bottom, var(--dark-color),
+            rgba(145, 233, 255, 0.2)),
+        repeating-linear-gradient(220deg, black 0px, black 19px, transparent 19px, transparent 22px),
+        repeating-linear-gradient(189deg, black 0px, black 19px, transparent 19px, transparent 22px),
+        repeating-linear-gradient(148deg, black 0px, black 19px, transparent 19px, transparent 22px),
+        linear-gradient(90deg, #00fffa, #f0f0f0);
+}
+
+.flowers {
+    position: relative;
+    transform: scale(0.7);
+}
+
+.flower {
+    position: absolute;
+    bottom: 10vmin;
+    transform-origin: bottom center;
+    z-index: 10;
+    --fl-speed: 0.8s;
+}
+
+.flower--1 {
+    animation: moving-flower-1 4s linear infinite;
+}
+
+.flower--1 .flower__line {
+    height: 70vmin;
+    animation-delay: 0.3s;
+}
+
+.flower--2 {
+    left: 50%;
+    transform: rotate(30deg);
+    animation: moving-flower-2 4s linear infinite;
+}
+
+.flower--2 .flower__line {
+    height: 60vmin;
+    animation-delay: 0.8s;
+}
+
+.flower--3 {
+    left: 50%;
+    transform: rotate(-15deg);
+    animation: moving-flower-3 4s linear infinite;
+}
+
+.flower__leafs {
+    position: relative;
+    animation: blooming-flower 2s backwards;
+}
+
+.flower__leafs--1 {
+    animation-delay: 1.1s;
+}
+
+.flower__leafs--2 {
+    animation-delay: 1.4s;
+}
+
+.flower__leafs--3 {
+    animation-delay: 1.7s;
+}
+
+.flower__leafs::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -100%);
+    width: 8vmin;
+    height: 8vmin;
+    background-color: #6bf0ff;
+    filter: blur(10vmin);
+}
+
+/* Gerbera Petal Styles */
+.flower__leaf {
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    width: 2vmin;
+    height: 25vmin;
+    border-radius: 50% 50% 0 0;
+    transform-origin: bottom center;
+    opacity: 0.9;
+    transform: translate(-50%, 0) rotate(var(--r)) scale(var(--s));
+}
+
+/* yellow Gerbera */
+.flower--1 .flower__leaf {
+    background-color: #ffee00;
+    background-image: linear-gradient(to top, #ffee00, #e7cd57);
+}
+
+/* Red */
+.flower--2 .flower__leaf {
+    background-color: #ff0000;
+    background-image: linear-gradient(to top, #d14949, #f8403a);
+}
+
+/* Yellow Gerbera */
+.flower--3 .flower__leaf {
+    background-color: #ff6600;
+    background-image: linear-gradient(to top, #ff7b00, #f79e63);
+}
+
+/* orange center */
+.flower__white-circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 4vmin;
+    height: 4vmin;
+    border-radius: 50%;
+    background-color: #003308;
+    box-shadow:
+        0 0 0 1vmin #ffd700,
+        0 0 0 1.5vmin #4a2c12;
+    z-index: 10;
+}
+
+.flower__white-circle::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    border-radius: inherit;
+    background-color: #ffeb3b;
+    filter: brightness(1.2);
+}
+
+.flower__line {
+    height: 55vmin;
+    width: 2vmin;
+    background-image: linear-gradient(to top, #1a5200, #02b90b);
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+    animation: grow-flower-tree 4s backwards;
+}
+
+.flower__light {
+    position: absolute;
+    bottom: 0vmin;
+    width: 1vmin;
+    height: 1vmin;
+    background-color: #fffb00;
+    border-radius: 50%;
+    filter: blur(0.2vmin);
+    animation: light-ans 4s linear infinite backwards;
+}
+
+.flower__light:nth-child(odd) {
+    background-color: #23f0ff;
+}
+
+/* Petal animation */
+@keyframes gerbera-petal-move {
+    0%, 100% {
+        transform: translate(-50%, 0) rotate(var(--r)) scale(var(--s));
+    }
+    50% {
+        transform: translate(-50%, -5%) rotate(calc(var(--r) + 5deg)) scale(calc(var(--s) * 1.05));
+    }
+}
+
+/* Apply petal animation */
+.flower__leaf {
+    animation: gerbera-petal-move 3s ease-in-out infinite;
+}
+
+/* Create petal positions dynamically */
+.flower__leafs {
+    --petal-count: 48;
+    --petal-distance: 4vmin;
+}
+
+.flower__leaf {
+    --angle: calc(var(--i) * (360deg / var(--petal-count)));
+    --r: var(--angle);
+    --s: calc(0.7 + 0.3 * sin(var(--angle)));
+    transform: 
+        translate(-50%, 0) 
+        rotate(var(--r)) 
+        translateY(calc(-1 * var(--petal-distance)))
+        scale(var(--s));
+}
+
+/* Grass and decorative elements */
+.flower__grass {
+    --c: #159faa;
+    --line-w: 1.5vmin;
+    position: absolute;
+    bottom: 12vmin;
+    left: -7vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 20;
+    transform-origin: bottom center;
+    transform: rotate(-48deg) rotateY(40deg);
+}
+
+.flower__grass--1 {
+    animation: moving-grass 2s linear infinite;
+}
+
+.flower__grass--2 {
+    left: 2vmin;
+    bottom: 10vmin;
+    transform: scale(0.5) rotate(75deg) rotateX(10deg) rotateY(-200deg);
+    opacity: 0.8;
+    z-index: 0;
+    animation: moving-grass--2 1.5s linear infinite;
+}
+
+.flower__grass--top {
+    width: 7vmin;
+    height: 10vmin;
+    border-top-right-radius: 100%;
+    border-right: var(--line-w) solid var(--c);
+    transform-origin: bottom center;
+    transform: rotate(-2deg);
+}
+
+.flower__grass--bottom {
+    margin-top: -2px;
+    width: var(--line-w);
+    height: 25vmin;
+    background-image: linear-gradient(to top, transparent, var(--c));
+}
+
+/* Animations */
+@keyframes moving-flower-1 {
+    0%, 100% {
+        transform: rotate(2deg);
+    }
+    50% {
+        transform: rotate(-2deg);
+    }
+}
+
+@keyframes moving-flower-2 {
+    0%, 100% {
+        transform: rotate(18deg);
+    }
+    50% {
+        transform: rotate(14deg);
+    }
+}
+
+@keyframes moving-flower-3 {
+    0%, 100% {
+        transform: rotate(-18deg);
+    }
+    50% {
+        transform: rotate(-20deg) rotateY(-10deg);
+    }
+}
+
+@keyframes grow-flower-tree {
+    0% {
+        height: 0;
+        border-radius: 1vmin;
+    }
+}
+
+@keyframes blooming-flower {
+    0% {
+        transform: scale(0);
+    }
+}
+
+@keyframes light-ans {
+    0% {
+        opacity: 0;
+        transform: translateY(0vmin);
+    }
+    25% {
+        opacity: 1;
+        transform: translateY(-5vmin) translateX(-2vmin);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-15vmin) translateX(2vmin);
+        filter: blur(0.2vmin);
+    }
+    75% {
+        transform: translateY(-20vmin) translateX(-2vmin);
+        filter: blur(0.2vmin);
+    }
+    100% {
+        transform: translateY(-30vmin);
+        opacity: 0;
+        filter: blur(1vmin);
+    }
+}
+
+@keyframes moving-grass {
+    0%, 100% {
+        transform: rotate(-48deg) rotateY(40deg);
+    }
+    50% {
+        transform: rotate(-50deg) rotateY(40deg);
+    }
+}
+
+@keyframes moving-grass--2 {
+    0%, 100% {
+        transform: scale(0.5) rotate(75deg) rotateX(10deg) rotateY(-200deg);
+    }
+    50% {
+        transform: scale(0.5) rotate(79deg) rotateX(10deg) rotateY(-200deg);
+    }
+}
+
+.not-loaded * {
+    animation-play-state: paused !important;
+}
